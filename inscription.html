@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Gospel Awards Edition 01</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Patkin Talen</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Accueil</a>
+                <a href="inscription.html" class="nav-link active"><i class="fas fa-edit"></i> Inscription</a>
+                <a href="admin.html" class="nav-link"><i class="fas fa-lock"></i> Admin</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Formulaire d'inscription -->
+    <div class="container">
+        <div id="formContainer" class="form-container">
+            <div class="form-header">
+                <h1>Patkin Talen</h1>
+                <h2>Concours Gospel Awards Edition 01</h2>
+                <h3>Fiche d'identification du candidat</h3>
+            </div>
+            
+            <form id="inscriptionForm">
+                <div class="form-group">
+                    <label for="numero">Candidat N°</label>
+                    <input type="text" id="numero" class="form-control" readonly>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nom">Nom *</label>
+                        <input type="text" id="nom" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="postnom">Post-nom *</label>
+                        <input type="text" id="postnom" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="genre">Genre *</label>
+                    <select id="genre" class="form-control" required>
+                        <option value="">Sélectionnez...</option>
+                        <option value="Masculin">Masculin</option>
+                        <option value="Féminin">Féminin</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="eglise">Église d'origine *</label>
+                    <input type="text" id="eglise" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="telephone">Numéro de Téléphone *</label>
+                    <input type="tel" id="telephone" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">E-mail *</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <p style="font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem;">
+                        <i class="fas fa-info-circle"></i> Tous les champs marqués d'un * sont obligatoires.
+                    </p>
+                </div>
+                
+                <div class="form-group" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        <i class="fas fa-paper-plane"></i> Soumettre l'inscription
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Patkin Talen - Gospel Awards Edition 01 © 2023</p>
+            <p>Les inscriptions sont examinées dans un délai de 24h</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
