@@ -1,4 +1,4 @@
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws8kbjoTp42eCQgmRHbFqP1iijqNceZSuWeaiMW4agZe-0cUlqvkAxR2eCcPf1-fnXKg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJzy4mQX-X4aGCi0d5anLgya0uznQ4-MkSIuYZ4PVq00nl4FuBZrelE72VGeUaAIQS2A/exec';
 let inscriptions = [];
 
 // ================= INIT =================
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initInscription() {
   loadNextCandidateNumber();
 
-  document.getElementById('inscriptionForm').addEventListener('submit', async e => {
+  inscriptionForm.addEventListener('submit', async e => {
     e.preventDefault();
 
     const data = {
@@ -34,21 +34,21 @@ function initInscription() {
       const json = await res.json();
 
       if (json.result === 'success') {
-        document.getElementById('formContainer').innerHTML = `
+        formContainer.innerHTML = `
           <div class="alert alert-success">
             <h3>Inscription réussie</h3>
-            <p>Numéro : <strong>${data.numero}</strong></p>
+            <p>Votre numéro est <strong>${data.numero}</strong></p>
           </div>`;
       } else {
-        showAlert('Erreur lors de l’inscription', 'danger');
+        alert('Erreur lors de l’inscription');
       }
-    } catch {
-      showAlert('Erreur de connexion', 'danger');
+    } catch (err) {
+      alert('Erreur de connexion');
     }
   });
 }
 
-// ================= NUMBER =================
+// ================= NUMÉRO =================
 async function loadNextCandidateNumber() {
   try {
     const res = await fetch(`${SCRIPT_URL}?action=getLastNumber`);
@@ -69,7 +69,7 @@ function initAdmin() {
     if (adminPassword.value === 'Golden1Agency') {
       localStorage.admin = 'true';
       loadAdmin();
-    } else showAlert('Mot de passe incorrect', 'danger');
+    } else alert('Mot de passe incorrect');
   });
 }
 
@@ -85,7 +85,7 @@ async function loadAdmin() {
 
 function renderAdmin() {
   inscriptionsTable.innerHTML = '';
-  inscriptions.forEach((i, index) => {
+  inscriptions.forEach((i, idx) => {
     inscriptionsTable.innerHTML += `
       <tr>
         <td>${i.numero}</td>
@@ -97,8 +97,8 @@ function renderAdmin() {
         <td>${i.email}</td>
         <td>${i.status}</td>
         <td>
-          <button onclick="updateStatus(${index},'approved')">Valider</button>
-          <button onclick="updateStatus(${index},'rejected')">Rejeter</button>
+          <button onclick="updateStatus(${idx},'approved')">Valider</button>
+          <button onclick="updateStatus(${idx},'rejected')">Rejeter</button>
         </td>
       </tr>`;
   });
@@ -108,13 +108,13 @@ async function updateStatus(index, status) {
   await fetch(SCRIPT_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ action: 'updateStatus', id: inscriptions[index].id, status })
+    body: JSON.stringify({
+      action: 'updateStatus',
+      id: inscriptions[index].id,
+      status
+    })
   });
+
   inscriptions[index].status = status;
   renderAdmin();
-}
-
-// ================= ALERT =================
-function showAlert(msg, type) {
-  alert(msg);
 }
