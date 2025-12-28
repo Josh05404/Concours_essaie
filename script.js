@@ -1,4 +1,4 @@
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJzy4mQX-X4aGCi0d5anLgya0uznQ4-MkSIuYZ4PVq00nl4FuBZrelE72VGeUaAIQS2A/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWG7KN3BJ0z76_bLyF37lYaOGU2uyI-sm-q3rb0YALeu0Nbo_eolnPZQ8Be0CC56m5Hg/exec';
 let inscriptions = [];
 
 // ================= INIT =================
@@ -25,10 +25,12 @@ function initInscription() {
     };
 
     try {
+      // IMPORTANT : PAS de JSON, PAS de headers → pas de preflight
+      const params = new URLSearchParams(data);
+
       const res = await fetch(SCRIPT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: params
       });
 
       const json = await res.json();
@@ -43,6 +45,7 @@ function initInscription() {
         alert('Erreur lors de l’inscription');
       }
     } catch (err) {
+      console.error(err);
       alert('Erreur de connexion');
     }
   });
@@ -69,7 +72,9 @@ function initAdmin() {
     if (adminPassword.value === 'Golden1Agency') {
       localStorage.admin = 'true';
       loadAdmin();
-    } else alert('Mot de passe incorrect');
+    } else {
+      alert('Mot de passe incorrect');
+    }
   });
 }
 
@@ -97,22 +102,23 @@ function renderAdmin() {
         <td>${i.email}</td>
         <td>${i.status}</td>
         <td>
-          <button onclick="updateStatus(${idx},'approved')">Valider</button>
-          <button onclick="updateStatus(${idx},'rejected')">Rejeter</button>
+          <button onclick="updateStatus(${idx}, 'approved')">Valider</button>
+          <button onclick="updateStatus(${idx}, 'rejected')">Rejeter</button>
         </td>
       </tr>`;
   });
 }
 
 async function updateStatus(index, status) {
+  const params = new URLSearchParams({
+    action: 'updateStatus',
+    id: inscriptions[index].id,
+    status
+  });
+
   await fetch(SCRIPT_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      action: 'updateStatus',
-      id: inscriptions[index].id,
-      status
-    })
+    body: params
   });
 
   inscriptions[index].status = status;
