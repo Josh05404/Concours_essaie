@@ -1,4 +1,4 @@
-const SCRIPT_URL = '🔴COLLE ICI LA NOUVELLE URL DU WEB APP🔴';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbws8kbjoTp42eCQgmRHbFqP1iijqNceZSuWeaiMW4agZe-0cUlqvkAxR2eCcPf1-fnXKg/exec';
 let inscriptions = [];
 
 // ================= INIT =================
